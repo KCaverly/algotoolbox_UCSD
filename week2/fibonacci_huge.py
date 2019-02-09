@@ -1,28 +1,23 @@
 # Uses python3
 import sys
 
-def get_pisano_period(m):
+def get_fibonacci_huge(n, m):
 
+    # Get Pisano Period and Fibonacci to Search
     fib = [0, 1]
 
     i = 1
     while True:
         i += 1
         fib.append( (fib[i-1] + fib[i-2]) % m)
+        if fib[i-2] == 0 and fib[i-1] == 1 and i != 2:
+            pisano_period = len(fib[:-3])
+            break
 
-        if fib[i-1] == 0 and fib[i-2] == 1 and i != 1:
-            return len(fib) - 2
+    # Return only value needed
+    remainder = n % pisano_period
 
-def get_fibonacci_huge(n, m):
-
-    remainder = n % get_pisano_period(m)
-
-    fib = [0, 1]
-
-    for i in range(2, remainder + 1):
-        fib.append( (fib[i-1] + fib[i-2]) % m)
-
-    return fib[-1]
+    return fib[remainder]
 
 def get_fibonacci_huge_naive(n, m):
     if n <= 1:

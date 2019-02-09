@@ -1,17 +1,23 @@
 # Uses python3
 import sys
 
-def get_pisano_period(m):
+def fibonacci_sum_last_digit(n):
 
+    # Get Pisano Period Where M = 10
+    m = 10
     fib = [0,1]
-
+    sumFib = [0,1]
     i = 1
     while True:
         i += 1
-        fib.append( (fib[i-1] + fib[i-2]) % m)
+        fib.append(fib[i-1] + fib[i-2])
+        sumFib.append(sum(fib) % 10)
+        if sumFib[i-1] == 1 and sumFib[i-2] == 0 and i != 2:
+            pisano_period = len(sumFib[:-3])
+            break
 
-        if fib[i-1] == 0 and fib[i-2] == 1 and i != 1:
-            return len(fib) - 2
+    remainder = n % pisano_period
+    return sumFib[remainder]
 
 def fibonacci_sum_naive(n):
     if n <= 1:
@@ -27,23 +33,7 @@ def fibonacci_sum_naive(n):
 
     return sum % 10
 
-def fibonacci_sum_last_digit(n):
-
-    pisano = get_pisano_period(10)
-
-    if n <= 2:
-        return n
-
-    n = n % pisano
-
-    fib = [0,1]
-
-    for i in range(2, n+3):
-        fib.append( (fib[i-1] + fib[i-2]) % 10)
-
-    return fib[n + 2] - 1
-
 if __name__ == '__main__':
     input = sys.stdin.read()
     n = int(input)
-    print(fibonacci_sum_naive(n))
+    print(fibonacci_sum_last_digit(n))

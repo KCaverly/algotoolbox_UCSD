@@ -15,37 +15,27 @@ def fibonacci_sum_squares_naive(n):
 
     return sum % 10
 
-def get_pisano_period(m):
-
-    fib = [0,1]
-
-    i = 1
-    while True:
-        i += 1
-        fib.append( ((fib[i-1] + fib[i-2]) ** 2) % m)
-
-        if i == 50:
-            print(fib)
-            exit()
-
-        if fib[i-1] == 1 and fib[i-2] == 0 and i != 2:
-            return len(fib[:-3])
 
 def fibonacci_sum_squares(n):
 
-    pisano = get_pisano_period(10)
-    remainder = n % pisano
-
+    # Generate Fib And Pisano Period
+    m = 10
     fib = [0,1]
+    squareFib = [0,1]
+    sumFib = [0,1]
 
     i = 1
     while True:
         i += 1
-        fib.append( ((fib[i-1] + fib[i-2]) ** 2) % m)
+        fib.append( (fib[i-1] + fib[i-2]))
+        squareFib.append( ( fib[i]**2))
+        sumFib.append( sum(squareFib) % 10)
+        if sumFib[i-1] == 1 and sumFib[i-2] == 0 and i!=2:
+            pisano_period = len(sumFib[:-3])
+            break
 
-
-
-    print(pisano, remainder)
+    remainder = n % pisano_period
+    return sumFib[remainder]
 
 if __name__ == '__main__':
     n = int(sys.stdin.read())
