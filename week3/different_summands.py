@@ -1,10 +1,25 @@
 # Uses python3
 import sys
 
+
 def optimal_summands(n):
     summands = []
-    #write your code here
+
+    i = 0
+    while True:
+
+        i += 1
+
+        if n-i <= i:
+            summands.append(n)
+            return summands
+
+        else:
+            summands.append(i)
+            n -= i
+
     return summands
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
