@@ -9,14 +9,8 @@ def largest_number(a):
     number = sorted([int(q) for q in a], reverse=True)
     number = [str(q) for q in number]
 
-    #print(number)
-
     i = 0
     while len(number) != 0:
-
-        #print('-'*10)
-        #print('Number:    {}'.format(number))
-        #print('i:         {}'.format(i))
 
         if len(number) == i:
             i = 0
@@ -34,11 +28,6 @@ def largest_number(a):
                 result = B
 
             del number[i]
-
-            #print('-'*10)
-            #print('A:    {}'.format(A))
-            #print('B:    {}'.format(B))
-            #print(result)
 
         elif i+1 == len(number):
             i = 0
