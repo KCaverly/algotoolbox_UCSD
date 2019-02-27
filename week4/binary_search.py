@@ -3,18 +3,17 @@ import sys
 
 def binary_search(a, x, left, right):
 
-    mid = int(left + ((right-left) / 2))
+    mid = left + ((right - left) // 2)
 
-    if left == right and x != a[right]:
-        return -1
-    elif a[left] > x or a[right] < x:
+    if left >= right and a[mid] != x:
         return -1
     elif x == a[mid]:
         return mid
-    elif x < a[mid]:
-        return binary_search(a, x, 0, mid-1)
     elif x > a[mid]:
-        return binary_search(a, x, mid+1, len(a) - 1)
+        return binary_search(a, x, mid+1, right)
+    elif x < a[mid]:
+        return binary_search(a, x, left, mid-1)
+
 
 def linear_search(a, x):
     for i in range(len(a)):

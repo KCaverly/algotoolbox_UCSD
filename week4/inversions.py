@@ -1,18 +1,45 @@
 # Uses python3
 import sys
+from operator import itemgetter
 
-def get_number_of_inversions(a, b, left, right):
-    number_of_inversions = 0
-    if right - left <= 1:
-        return number_of_inversions
-    ave = (left + right) // 2
-    number_of_inversions += get_number_of_inversions(a, b, left, ave)
-    number_of_inversions += get_number_of_inversions(a, b, ave, right)
-    #write your code here
-    return number_of_inversions
+def inversions(arr):
+
+    if len(arr) == 1:
+        return arr, 0
+
+    else:
+
+        mid = len(arr) // 2
+        a = arr[:mid]
+        b = arr[mid:]
+
+        a, a_inv = inversions(a)
+        b, b_inv = inversions(b)
+
+        merged = []
+
+        i = 0
+        j = 0
+        inv = 0 + a_inv + b_inv
+
+        while i < len(a) and j < len(b):
+            if a[i] <= b[j]:
+                merged.append(a[i])
+                i += 1
+            else:
+                merged.append(b[j])
+                j += 1
+                inv += (len(a)-i)
+
+        merged += a[i:]
+        merged += b[j:]
+
+    return merged, inv
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
     n, *a = list(map(int, input.split()))
     b = n * [0]
-    print(get_number_of_inversions(a, b, 0, len(a)))
+    result, inv = inversions(a)
+    print(inv)
