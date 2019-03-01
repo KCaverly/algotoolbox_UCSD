@@ -1,9 +1,32 @@
 # Uses python3
 import sys
+from itertools import chain
 
 def fast_count_segments(starts, ends, points):
     cnt = [0] * len(points)
-    #write your code here
+
+    # Generate zip iterators for starts
+    starts = zip(starts, ['left'] * len(starts), range(len(starts)))
+
+    # Generate zip iterators for ends
+    ends = zip(ends, ['left'] * len(ends), range(len(ends)))
+
+    # Generate zip iterators for points
+    points = zip(points, ['point'] * len(points), range(len(points)))
+
+    # Combine zip iterators
+    sort_list = sorted(chain(starts, ends, points))
+
+    i = 0
+    for val, loc, idx in sort_list:
+
+        if loc == 'left':
+            i += 1
+        elif loc == 'right':
+            i -= 1
+        elif loc == 'point':
+            cnt[idx] = i
+
     return cnt
 
 def naive_count_segments(starts, ends, points):
@@ -23,6 +46,6 @@ if __name__ == '__main__':
     ends   = data[3:2 * n + 2:2]
     points = data[2 * n + 2:]
     #use fast_count_segments
-    cnt = naive_count_segments(starts, ends, points)
+    cnt = fast_count_segments(starts, ends, points)
     for x in cnt:
         print(x, end=' ')
