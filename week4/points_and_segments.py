@@ -9,7 +9,7 @@ def fast_count_segments(starts, ends, points):
     starts = zip(starts, ['left'] * len(starts), range(len(starts)))
 
     # Generate zip iterators for ends
-    ends = zip(ends, ['left'] * len(ends), range(len(ends)))
+    ends = zip(ends, ['right'] * len(ends), range(len(ends)))
 
     # Generate zip iterators for points
     points = zip(points, ['point'] * len(points), range(len(points)))
